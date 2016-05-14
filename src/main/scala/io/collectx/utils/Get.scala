@@ -7,7 +7,7 @@ import akka.http.scaladsl.model._
 import akka.stream.ActorMaterializer
 import akka.stream.ActorMaterializerSettings
 import akka.util.ByteString
-
+import com.typesafe.config.ConfigFactory
 
 class Get extends Actor
   with ActorLogging {
@@ -17,10 +17,11 @@ class Get extends Actor
   
   final implicit val materializer: ActorMaterializer = ActorMaterializer(ActorMaterializerSettings(context.system))
  
+  val conf = ConfigFactory.load()
   val http = Http(context.system)
- 
+  
   override def preStart() = {
-    http.singleRequest(HttpRequest(uri = "http://akka.io"))
+    http.singleRequest(HttpRequest(uri = conf.getString("gimme.url") ))
       .pipeTo(self)
   }
  
@@ -32,7 +33,7 @@ class Get extends Actor
       log.info("Request failed, response code: " + code)
       
     case _  =>
-      log.info("Nada...")
+      log.info("I got's nada...")
       
   }
  

@@ -41,3 +41,4 @@ logs/*
 .settings
 .worksheet
 bin
+/worksheets/
