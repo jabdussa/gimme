@@ -30,15 +30,29 @@ class Load extends Actor
     log.info(conf.getString("gimme.hello"))
     log.info("Load Settings")
     log.info("Manufacturers CSS Selector: {}", conf.getString("gimme.parse.manufacturers"))
-    log.info("Sample HTML Data: {}", conf.getString("gimme.parse.sample_html"))     
+    log.info("Sample HTML Data: {}", conf.getString("gimme.parse.html"))     
     Future(HtmlMsg(data)).pipeTo(self)
   }
  
   def receive = {
     case h: HtmlMsg if ! h.data.isEmpty =>
-      log.info("Received HtmlMsg {} bytes", + h.data.length())      
+      log.info("Received HtmlMsg {} bytes", + h.data.length())
+      parse(h.data, conf.getString("gimme.parse.manufacturers"))
     case _  =>
       log.info("I got's nada...")
   }
  
+  
+   def parse(html: String, selector: String) = {
+     
+     /*
+	
+				export JAR=/Users/anwarabdus-samad/Development/gimme/target/scala-2.11/gimme-assembly-1.0.jar
+				scala -cp $JAR
+
+
+      */
+      
+   }
+  
 }
