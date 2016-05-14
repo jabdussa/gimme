@@ -42,3 +42,6 @@ logs/*
 .worksheet
 bin
 /worksheets/
+
+tmp/*
+tmp
