@@ -4,22 +4,20 @@ import akka.actor.Actor
 import akka.actor.ActorLogging
 import akka.stream.ActorMaterializer
 import akka.stream.ActorMaterializerSettings
+
+import org.jsoup.Jsoup
+import org.jsoup.helper.Validate
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
+
+import scala.io.Source
+import scala.concurrent.Future
 import com.typesafe.config.ConfigFactory
 
-import org.jsoup.Jsoup;
-import org.jsoup.helper.Validate;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import scala.io.Source
- 
-import scala.concurrent.Future
-
-case class HtmlMsg(data: String)
-
-class Load extends Actor
+class Load extends Actor 
   with ActorLogging {
- 
+
   import akka.pattern.pipe
   import context.dispatcher
  
