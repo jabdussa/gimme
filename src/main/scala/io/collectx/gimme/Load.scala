@@ -24,12 +24,12 @@ class Load extends Actor
   final implicit val materializer: ActorMaterializer = ActorMaterializer(ActorMaterializerSettings(context.system))
  
   val conf = ConfigFactory.load()
-  val data = Source.fromFile(conf.getString("gimme.parse.sample_html")).getLines.mkString
+  val data = Source.fromFile(conf.getString("gimme.parse.html")).getLines.mkString
   
   override def preStart() = {
     log.info(conf.getString("gimme.hello"))
     log.info("Load Settings")
-    log.info("Manufacturers CSS Selector: {}", conf.getString("gimme.parse.manufacturers"))
+    log.info("Manufacturers CSS Selector: {}", conf.getString("gimme.parse.manu"))
     log.info("Sample HTML Data: {}", conf.getString("gimme.parse.html"))     
     Future(HtmlMsg(data)).pipeTo(self)
   }
@@ -37,7 +37,7 @@ class Load extends Actor
   def receive = {
     case h: HtmlMsg if ! h.data.isEmpty =>
       log.info("Received HtmlMsg {} bytes", + h.data.length())
-      parse(h.data, conf.getString("gimme.parse.manufacturers"))
+      parse(h.data, conf.getString("gimme.parse.manu"))
     case _  =>
       log.info("I got's nada...")
   }
