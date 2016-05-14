@@ -15,3 +15,29 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+
+# Eclipse
+project/*
+project/
+target/
+target/*
+.project
+
+# VIM
+.swp
+.swo
+
+
+# sbteclipse plugin
+.target
+
+logs
+logs/*
+
+.DS_Store   
+.cache-main  
+.classpath   
+.project     
+.settings
+.worksheet
+bin
