@@ -9,7 +9,7 @@ import akka.stream.ActorMaterializerSettings
 import akka.util.ByteString
 import com.typesafe.config.ConfigFactory
 
-class Get extends Actor
+class Parse extends Actor
   with ActorLogging {
  
   import akka.pattern.pipe
@@ -21,10 +21,13 @@ class Get extends Actor
   val http = Http(context.system)
   
   override def preStart() = {
-    http.singleRequest(HttpRequest(uri = conf.getString("gimme.url") ))
-      .pipeTo(self)
+      
+    log.info("Parse Settings..")
+    log.info("Manufacturers: " + conf.getString("gimme.parse.manufacturers") )
+    
   }
  
+  
   def receive = {
     case HttpResponse(StatusCodes.OK, headers, entity, _) =>
       log.info("Got response, body: " + entity.dataBytes.runFold(ByteString(""))(_ ++ _))
